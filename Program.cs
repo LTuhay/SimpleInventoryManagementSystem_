@@ -1,0 +1,3 @@
+﻿using SimpleInventoryManagementSystem;
+
+Utilities.ShowMainMenu();
