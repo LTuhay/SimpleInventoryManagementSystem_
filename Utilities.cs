@@ -14,14 +14,16 @@ namespace SimpleInventoryManagementSystem
         {
             bool exit = false;
 
+                Console.WriteLine("* Welcome! *");
             do
             {
-                Console.WriteLine("* Welcome! *");
+
                 Console.WriteLine("********************");
                 Console.WriteLine("* Select an action *");
                 Console.WriteLine("********************");
 
                 Console.WriteLine("1: Add product");
+                Console.WriteLine("2: View all products");
                 Console.WriteLine("0: Exit");
 
                 string? userSelection = Console.ReadLine();
@@ -29,6 +31,9 @@ namespace SimpleInventoryManagementSystem
                 {
                     case "1":
                         ShowCreateNewProduct();
+                        break;
+                    case "2":
+                        ViewAllProducts();
                         break;
                     case "0":
                         exit = true;
@@ -40,6 +45,12 @@ namespace SimpleInventoryManagementSystem
                 }
             } while (!exit);
 
+        }
+
+        private static void ViewAllProducts()
+        {
+            Console.WriteLine("* All Products *");
+            inventory.PrintInventory();
         }
 
         private static void ShowCreateNewProduct()
