@@ -26,6 +26,7 @@ namespace SimpleInventoryManagementSystem
                 Console.WriteLine("1: Add product");
                 Console.WriteLine("2: View all products");
                 Console.WriteLine("3: Update a product");
+                Console.WriteLine("4: Delete a product");
                 Console.WriteLine("0: Exit");
 
                 string? userSelection = Console.ReadLine();
@@ -40,6 +41,9 @@ namespace SimpleInventoryManagementSystem
                     case "3":
                         ShowUpdateAProduct();
                         break;
+                    case "4":
+                        DeleteAProduct();
+                        break;
                     case "0":
                         exit = true;
                         Exit();
@@ -49,6 +53,28 @@ namespace SimpleInventoryManagementSystem
                         break;
                 }
             } while (!exit);
+
+        }
+
+        private static void DeleteAProduct()
+        {
+            string productName;
+            do
+            {
+                Console.WriteLine("Which producto would you like to delete?");
+                productName = Console.ReadLine();
+            } while ( string.IsNullOrEmpty(productName));
+
+            Product productToDelete = inventory.FindProductByName(productName);
+            if (productToDelete == null)
+            {
+                Console.WriteLine("Product not found");
+            }
+            else
+            {
+                inventory.RemoveProduct(productToDelete);
+                Console.WriteLine("* Product deleted *");
+            }
 
         }
 

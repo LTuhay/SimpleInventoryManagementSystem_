@@ -21,6 +21,11 @@ namespace SimpleInventoryManagementSystem.ProductManagement
             products.Add (product);
         }
 
+        public void RemoveProduct (Product product)
+        {
+            Products.Remove(product);
+        }
+
         public void PrintInventory()
         {
             foreach (Product product in products) {
