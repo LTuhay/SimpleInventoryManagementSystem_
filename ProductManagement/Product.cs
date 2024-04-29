@@ -45,7 +45,7 @@ namespace SimpleInventoryManagementSystem.ProductManagement
 
         }
 
-        public void PrintProducts()
+        public void PrintProduct()
         {
 
             Console.WriteLine($"Id: {Id}, Name: {Name}, Price: {Price}, Quantity: {Quantity}");

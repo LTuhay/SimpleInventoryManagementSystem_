@@ -24,8 +24,23 @@ namespace SimpleInventoryManagementSystem.ProductManagement
         public void PrintInventory()
         {
             foreach (Product product in products) {
-            product.PrintProducts();
+            product.PrintProduct();
             }
         }
+  
+
+        public Product FindProductByName(string productName)
+        {
+            Product product = products.FirstOrDefault(p => p.Name.Equals(productName, StringComparison.OrdinalIgnoreCase));
+
+            return product;
+        }
+
+        public int FindProductIndex(string productName)
+        {
+            return products.FindIndex(p => p.Name.Equals(productName, StringComparison.OrdinalIgnoreCase));
+            
+        }
+
     }
 }
