@@ -1,25 +1,26 @@
-﻿
-
-namespace SimpleInventoryManagementSystem.ProductManagement
+﻿namespace SimpleInventoryManagementSystem.ProductManagement.Entity
 {
     public class Product
     {
 
-        public int Id    { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
 
         public double Price { get; set; }
 
-        public int Quantity { get; private set; }
+        public int Quantity { get; set; }
 
         public Product(int id, string name, double price)
         {
-            this.Id = id;
-            this.Name = name;
-            this.Price = price;
+            Id = id;
+            Name = name;
+            Price = price;
         }
 
-        public virtual void IncreaseQuantity (int quantityToIncrease)
+        public Product(string name, double price) : this(0, name, price) { }
+
+
+        public virtual void IncreaseQuantity(int quantityToIncrease)
         {
             Quantity += quantityToIncrease;
         }

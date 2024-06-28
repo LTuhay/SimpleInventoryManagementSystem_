@@ -1,21 +1,22 @@
-﻿using SimpleInventoryManagementSystem.ProductManagement;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SimpleInventoryManagementSystem.ProductManagement.Entity;
 
-namespace SimpleInventoryManagementSystem
+namespace SimpleInventoryManagementSystem.Utilities
 {
-    internal class Utilities
+    public class Utilities
     {
-        private static Inventory inventory = new Inventory();
-        internal static void ShowMainMenu()
+
+        private readonly Inventory _inventory;
+
+        public Utilities(Inventory inventory)
+        {
+            _inventory = inventory;
+        }
+
+        public void ShowMainMenu()
         {
             bool exit = false;
 
-                Console.WriteLine("* Welcome! *");
+            Console.WriteLine("* Welcome! *");
             do
             {
 
@@ -60,7 +61,7 @@ namespace SimpleInventoryManagementSystem
 
         }
 
-        private static void SearchForAProduct()
+        private void SearchForAProduct()
         {
             string productName;
             do
@@ -68,42 +69,48 @@ namespace SimpleInventoryManagementSystem
                 Console.WriteLine("Enter product name");
                 productName = Console.ReadLine();
             } while (string.IsNullOrEmpty(productName));
-            Product productToSearch = inventory.FindProductByName(productName);
-            productToSearch.PrintProduct();
+            Product? productToSearch = _inventory.FindProductByName(productName);
+            if (productToSearch == null)
+            {
+                Console.WriteLine("Product not found");
+            } else
+            {
+                productToSearch.PrintProduct();
+            }
         }
 
-        private static void DeleteAProduct()
+        private void DeleteAProduct()
         {
             string productName;
             do
             {
                 Console.WriteLine("Which producto would you like to delete?");
                 productName = Console.ReadLine();
-            } while ( string.IsNullOrEmpty(productName));
+            } while (string.IsNullOrEmpty(productName));
 
-            Product productToDelete = inventory.FindProductByName(productName);
+            Product? productToDelete = _inventory.FindProductByName(productName);
             if (productToDelete == null)
             {
                 Console.WriteLine("Product not found");
             }
             else
             {
-                inventory.RemoveProduct(productToDelete);
+                _inventory.RemoveProduct(productToDelete);
                 Console.WriteLine("* Product deleted *");
             }
 
         }
 
-        private static void ShowUpdateAProduct()
+        private void ShowUpdateAProduct()
         {
             string productName;
             do
             {
                 Console.WriteLine("Which product would you like to update?");
                 productName = Console.ReadLine();
-            } while (String.IsNullOrEmpty(productName));
+            } while (string.IsNullOrEmpty(productName));
 
-            Product productToUpdate = inventory.FindProductByName(productName);
+            Product productToUpdate = _inventory.FindProductByName(productName);
             if (productToUpdate == null)
             {
                 Console.WriteLine("Product not found");
@@ -119,7 +126,7 @@ namespace SimpleInventoryManagementSystem
                 string decreaseQuantityStr;
                 int decreaseQuantity;
 
-                int index = inventory.FindProductIndex(productName);
+                int? index = _inventory.FindProductIndex(productName);
                 do
                 {
                     Console.WriteLine($"* Updating {productToUpdate.Name} *");
@@ -178,37 +185,28 @@ namespace SimpleInventoryManagementSystem
 
                 } while (!exit);
 
-                inventory.Products[index] = productToUpdate;
-                Console.WriteLine("* Product updated *");                
+                _inventory.UpdateProduct(productToUpdate);
+                Console.WriteLine("* Product updated *");
             }
 
 
         }
 
 
-        private static void ViewAllProducts()
+        private void ViewAllProducts()
         {
             Console.WriteLine("* All Products *");
-            inventory.PrintInventory();
+            _inventory.PrintInventory();
         }
 
-        private static void ShowCreateNewProduct()
+        private void ShowCreateNewProduct()
         {
-            int id;
+
             string name;
             double price;
             string priceStr;
             int quantity;
             string quantityStr;
-
-            if (inventory.Products.Count ==0)
-            {
-                id = 0;
-            }
-            else
-            {
-                id = inventory.Products.Max(p => p.Id) + 1;
-            }
 
             do
             {
@@ -228,12 +226,12 @@ namespace SimpleInventoryManagementSystem
                 quantityStr = Console.ReadLine();
             } while (!int.TryParse(quantityStr, out quantity));
 
-            Product newProduct = new Product(id, name, price);
+            Product newProduct = new Product(0, name, price);
             newProduct.IncreaseQuantity(quantity);
-            inventory.AddProduct(newProduct);
+            _inventory.AddProduct(newProduct);
         }
 
-        private static void Exit()
+        private void Exit()
         {
             Console.WriteLine("Goodbye!");
 
