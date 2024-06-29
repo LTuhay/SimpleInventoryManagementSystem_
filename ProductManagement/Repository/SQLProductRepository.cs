@@ -5,11 +5,11 @@ using System.Data.SqlClient;
 
 namespace SimpleInventoryManagementSystem.ProductManagement.Repository
 {
-    public class ProductRepository : IProductRepository
+    public class SQLProductRepository : IProductRepository
     {
         private readonly string _connectionString;
 
-        public ProductRepository (string connectionString)
+        public SQLProductRepository (string connectionString)
         {
             _connectionString = connectionString;
         }

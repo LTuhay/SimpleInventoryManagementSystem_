@@ -1,8 +1,15 @@
-﻿namespace SimpleInventoryManagementSystem.ProductManagement.Entity
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
+
+namespace SimpleInventoryManagementSystem.ProductManagement.Entity
 {
     public class Product
     {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public ObjectId MongoId { get; set; }
 
+        [BsonElement("Id")]
         public int Id { get; set; }
         public string Name { get; set; }
 
